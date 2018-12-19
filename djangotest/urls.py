@@ -16,10 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.conf.urls import url
 from django.urls import path, include
-from testapp.views import LoginCreateView
+from testapp.views import LoginCreateView, operation_check
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', LoginCreateView.as_view()),
-#    url('login/', include('testapp.urls')),
+    path('login/operation_check', operation_check), 
+    #url(r'^/$', include('testapp.urls')),
 ]
