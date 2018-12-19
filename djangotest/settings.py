@@ -54,7 +54,7 @@ ROOT_URLCONF = 'djangotest.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -128,5 +128,29 @@ INSTALLED_APPS = (
      'django.contrib.messages',
      'django.contrib.staticfiles',
      'gunicorn',
+     'widget_tweaks',
      'testapp'
 )
+
+INSTALLED_APPS += ('crispy_forms', )
+INSTALLED_APPS += ('logging', )
+#INSTALLED_APPS += ('django_user_agents.middleware.UserAgentMiddleware',)
+INSTALLED_APPS += ('django_user_agents',)
+
+MIDDLEWARE_CLASSES = (
+    # other middlewares...
+    'django_user_agents.middleware.UserAgentMiddleware',
+)
+
+# Cache backend is optional, but recommended to speed up user agent parsing
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+    }
+}
+
+# Name of cache backend to cache user agents. If it not specified default
+# cache alias will be used. Set to `None` to disable caching.
+USER_AGENTS_CACHE = 'default'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
